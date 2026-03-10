@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplicacion_CTG", "Aplicacion_CTG\Aplicacion_CTG.csproj", "{EFDBB603-53B3-43D0-B2FF-7032779FD0C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFDBB603-53B3-43D0-B2FF-7032779FD0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFDBB603-53B3-43D0-B2FF-7032779FD0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFDBB603-53B3-43D0-B2FF-7032779FD0C1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EFDBB603-53B3-43D0-B2FF-7032779FD0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFDBB603-53B3-43D0-B2FF-7032779FD0C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFDBB603-53B3-43D0-B2FF-7032779FD0C1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24BD4A43-31BC-46C0-A2A2-00D718004042}
+	EndGlobalSection
+EndGlobal
