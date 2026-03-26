@@ -1,0 +1,35 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CTG_App.Vistas.MenuPrincipal"
+             Title="Menú">
+
+    <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
+
+        <Label 
+            Text="Bienvenido"
+            FontSize="30"
+            HorizontalOptions="Center"/>
+
+        <Button 
+            Text="Mi Perfil"
+            Clicked="OnPerfilClicked"/>
+
+        <Button 
+            Text="Registrar Partido"
+            Clicked="OnPartidoClicked"/>
+
+        <Button 
+            Text="Ranking"
+            Clicked="OnRankingClicked"/>
+        <Button 
+            Text="Chat"
+            Clicked="OnChatClicked"/>
+
+        <Button 
+            Text="Cerrar sesión"
+            BackgroundColor="Red"
+            Clicked="OnLogoutClicked"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>

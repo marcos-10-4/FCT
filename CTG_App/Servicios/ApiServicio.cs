@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CTG_App.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
@@ -15,8 +16,12 @@ namespace CTG_App.Servicios
         {
             _client = new HttpClient
             {
-                BaseAddress = new Uri("http://10.0.2.2:5085/") // Cambia por tu URL de la API
+                BaseAddress = new Uri("http://10.0.2.2:5085/") 
             };
+        }
+        public async Task<List<Ranking>> GetRankingAsync()
+        {
+            return await _client.GetFromJsonAsync<List<Ranking>>("api/UsuariosControlador/ranking");
         }
     }
 }

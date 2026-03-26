@@ -45,5 +45,43 @@ namespace CTG_Api.Controladores
 
             return Ok(usuario);
         }
+        [HttpGet("ranking")]
+        public ActionResult<List<Ranking>> GetRanking()
+        {
+            var usuarios = _context.Usuarios
+                                   .OrderByDescending(u => u.Puntos)
+                                   .ToList();
+
+            var ranking = usuarios.Select((u, index) => new Ranking
+            {
+                Posicion = index + 1,
+                Nombre = u.Nombre,
+                Puntos = u.Puntos
+            }).ToList();
+
+            return Ok(ranking);
+        }
+        [HttpGet("{id}")]
+        public IActionResult GetPerfilJugador(int id)
+        {
+            var jugador = _context.Usuarios
+                .Where(u => u.Id == id)
+                .Select(u => new PerfilJugador
+                {
+                    Id = u.Id,
+                    Nombre = u.Nombre,
+                    Email = u.Email,
+                    Puntos = u.Puntos,
+                    PartidosJugados = u.PartidosJugados,
+                    Victorias = u.Victorias,
+                    Derrotas = u.Derrotas
+                })
+                .FirstOrDefault();
+
+            if (jugador == null)
+                return NotFound("Jugador no encontrado");
+
+            return Ok(jugador);
+        }
     }
 }

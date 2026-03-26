@@ -1,3 +1,5 @@
+using CTG_App.Modelos;
+using CTG_App.Servicios;
 using System.Net.Http.Json;
 
 namespace CTG_App.Vistas;
@@ -24,9 +26,10 @@ public partial class InicioSesion : ContentPage
 
         if (response.IsSuccessStatusCode)
         {
-            await DisplayAlert("Correcto", "Login correcto", "OK");
+            var usuario = await response.Content.ReadFromJsonAsync<Usuario>();
 
-            // aquí luego iremos al menú principal
+            Sesion.UsuarioId = usuario.Id;
+            await Navigation.PushAsync(new MenuPrincipal());
         }
         else
         {
