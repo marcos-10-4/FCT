@@ -3,25 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.Chat"
              Title="Chat">
-    <Grid RowDefinitions="*,Auto" Padding="10">
 
-        <CollectionView x:Name="MensajesList" Grid.Row="0">
+    <VerticalStackLayout Padding="10" Spacing="5">
+
+        <!-- CollectionView para mostrar mensajes -->
+        <CollectionView x:Name="MensajesList"
+                        ItemsSource="{Binding Mensajes}"
+                        VerticalOptions="FillAndExpand">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="10" Margin="5" CornerRadius="10">
+                    <Frame Padding="10" Margin="5"
+                           CornerRadius="10"
+                           HorizontalOptions="{Binding EsMio, Converter={StaticResource EscribirBool}}"
+                           BackgroundColor="{Binding EsMio, Converter={StaticResource EscribirBoolColor}}">
                         <VerticalStackLayout>
-                            <Label Text="{Binding Emisor}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Texto}"/>
+                            <Label Text="{Binding Texto}" LineBreakMode="WordWrap"/>
+                            <Label Text="{Binding Hora}" FontSize="10" HorizontalOptions="End"/>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <HorizontalStackLayout Grid.Row="1" Spacing="10">
+        <!-- Entrada de texto y botón enviar -->
+        <HorizontalStackLayout Spacing="5">
             <Entry x:Name="MensajeEntry" Placeholder="Escribe un mensaje..." HorizontalOptions="FillAndExpand"/>
             <Button Text="Enviar" Clicked="OnEnviarClicked"/>
         </HorizontalStackLayout>
 
-    </Grid>
+    </VerticalStackLayout>
 </ContentPage>

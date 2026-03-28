@@ -29,7 +29,7 @@ public partial class InicioSesion : ContentPage
             var usuario = await response.Content.ReadFromJsonAsync<Usuario>();
 
             Sesion.UsuarioId = usuario.Id;
-            await Navigation.PushAsync(new MenuPrincipal());
+            await Navigation.PushAsync(new MenuPrincipal(usuario));
         }
         else
         {

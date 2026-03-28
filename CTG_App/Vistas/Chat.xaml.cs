@@ -1,27 +1,38 @@
-using CTG_App.Modelos;
 using System.Net.Http.Json;
+using System.Collections.ObjectModel;
+using CTG_App.Modelos;
 
 namespace CTG_App.Vistas;
-
 public partial class Chat : ContentPage
 {
-    HttpClient client = new HttpClient
-    {
-        BaseAddress = new Uri("http://10.0.2.2:5085/")
-    };
+    private int UsuarioActualId;
+    private int ReceptorId;
+    private HttpClient client;
 
-    string usuarioActual = "Jugador";
+    public ObservableCollection<Mensaje> Mensajes { get; set; }
 
-    public Chat()
+    public Chat(int usuarioActualId, int receptorId)
     {
         InitializeComponent();
+
+        this.UsuarioActualId = usuarioActualId;
+        this.ReceptorId = receptorId;
+
+        client = new HttpClient
+        {
+            BaseAddress = new Uri("http://10.0.2.2:5085/") // Cambiar según pruebas en móvil físico
+        };
+
+        Mensajes = new ObservableCollection<Mensaje>();
+        BindingContext = this;
+
         CargarMensajes();
 
-        // Auto refresco cada 3 segundos
+        // Refrescar cada 3 segundos
         Device.StartTimer(TimeSpan.FromSeconds(3), () =>
         {
             CargarMensajes();
-            return true;
+            return true; // true para repetir
         });
     }
 
@@ -29,12 +40,24 @@ public partial class Chat : ContentPage
     {
         try
         {
-            var mensajes = await client.GetFromJsonAsync<List<Mensaje>>("api/Chat");
-            MensajesList.ItemsSource = mensajes;
+            var lista = await client.GetFromJsonAsync<List<Mensaje>>($"api/ChatControlador/{UsuarioActualId}/{ReceptorId}");
+
+            if (lista == null) return;
+
+            Mensajes.Clear();
+            foreach (var m in lista)
+            {
+                m.EsMio = m.EmisorId == UsuarioActualId;
+                Mensajes.Add(m);
+            }
+
+            if (Mensajes.Any())
+                MensajesList.ScrollTo(Mensajes.Last(), position: ScrollToPosition.End, animate: false);
         }
-        catch
+        catch (Exception ex)
         {
-            // evitar que crashee
+            // Para pruebas puedes comentar esta línea
+            // await DisplayAlert("Error", $"No se pudieron cargar los mensajes: {ex.Message}", "OK");
         }
     }
 
@@ -43,16 +66,32 @@ public partial class Chat : ContentPage
         if (string.IsNullOrWhiteSpace(MensajeEntry.Text))
             return;
 
-        var mensaje = new
+        var mensaje = new Mensaje
         {
-            Emisor = usuarioActual,
-            Texto = MensajeEntry.Text
+            EmisorId = UsuarioActualId,
+            ReceptorId = ReceptorId,
+            Texto = MensajeEntry.Text,
+            Fecha = DateTime.Now
         };
 
-        await client.PostAsJsonAsync("api/Chat", mensaje);
-
-        MensajeEntry.Text = "";
-
-        CargarMensajes();
+        try
+        {
+            var response = await client.PostAsJsonAsync("api/ChatControlador", mensaje);
+            if (response.IsSuccessStatusCode)
+            {
+                mensaje.EsMio = true;
+                Mensajes.Add(mensaje);
+                MensajeEntry.Text = string.Empty;
+                MensajesList.ScrollTo(Mensajes.Last(), position: ScrollToPosition.End, animate: true);
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se pudo enviar el mensaje", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Fallo al enviar: {ex.Message}", "OK");
+        }
     }
 }

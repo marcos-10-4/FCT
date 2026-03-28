@@ -1,35 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.MenuPrincipal"
-             Title="Menú">
+             Title="Menú Principal"
+             Padding="20">
 
-    <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
+    <VerticalStackLayout Spacing="20">
 
-        <Label 
-            Text="Bienvenido"
-            FontSize="30"
-            HorizontalOptions="Center"/>
+        <Label Text="Bienvenido"
+               FontSize="26"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"/>
 
-        <Button 
-            Text="Mi Perfil"
-            Clicked="OnPerfilClicked"/>
+        <!-- Botones principales -->
+        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+            <Button Text="Perfil" Clicked="OnPerfilClicked"/>
+            <Button Text="Partido" Clicked="OnPartidoClicked"/>
+            <Button Text="Ranking" Clicked="OnRankingClicked"/>
+            <Button Text="Logout" Clicked="OnLogoutClicked"/>
+        </HorizontalStackLayout>
 
-        <Button 
-            Text="Registrar Partido"
-            Clicked="OnPartidoClicked"/>
+        <Label Text="Selecciona un usuario para chatear:"
+               FontSize="18"/>
 
-        <Button 
-            Text="Ranking"
-            Clicked="OnRankingClicked"/>
-        <Button 
-            Text="Chat"
-            Clicked="OnChatClicked"/>
-
-        <Button 
-            Text="Cerrar sesión"
-            BackgroundColor="Red"
-            Clicked="OnLogoutClicked"/>
+        <!-- Lista de usuarios -->
+        <CollectionView x:Name="UsuariosList"
+                SelectionChanged="OnUsuarioSeleccionado"
+                SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="5" CornerRadius="8" HasShadow="True">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUsuarioTapped" NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                        <Label Text="{Binding Nombre}" FontSize="16"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </VerticalStackLayout>
-
 </ContentPage>

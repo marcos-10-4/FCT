@@ -1,6 +1,7 @@
 ﻿using CTG_Api.Data;
 using CTG_Api.Modelos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CTG_Api.Controladores
 {
@@ -32,6 +33,18 @@ namespace CTG_Api.Controladores
             _context.SaveChanges();
 
             return Ok();
+        }
+        [HttpGet("{usuario1}/{usuario2}")]
+        public ActionResult<IEnumerable<Mensaje>> GetChat(int usuario1, int usuario2)
+        {
+            var mensajes = _context.Mensajes
+                .Where(m =>
+                    (m.EmisorId == usuario1 && m.ReceptorId == usuario2) ||
+                    (m.EmisorId == usuario2 && m.ReceptorId == usuario1))
+                .OrderBy(m => m.Fecha)
+                .ToList();
+
+            return mensajes;
         }
     }
 }
