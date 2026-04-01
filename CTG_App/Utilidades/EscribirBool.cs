@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CTG_App.Utilidades
 {
-    internal class EscribirBool : IValueConverter
+    public class EscribirBool : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

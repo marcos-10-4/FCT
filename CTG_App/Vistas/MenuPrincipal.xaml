@@ -3,41 +3,108 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.MenuPrincipal"
              Title="Menú Principal"
+             BackgroundColor="White"
              Padding="20">
 
     <VerticalStackLayout Spacing="20">
 
+        <!-- Título -->
         <Label Text="Bienvenido"
-               FontSize="26"
+               FontSize="30"
+               TextColor="Purple"
                HorizontalOptions="Center"
                FontAttributes="Bold"/>
 
-        <!-- Botones principales -->
-        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
-            <Button Text="Perfil" Clicked="OnPerfilClicked"/>
-            <Button Text="Partido" Clicked="OnPartidoClicked"/>
-            <Button Text="Ranking" Clicked="OnRankingClicked"/>
-            <Button Text="Logout" Clicked="OnLogoutClicked"/>
-        </HorizontalStackLayout>
+        <!-- Tarjeta de botones -->
+        <Frame CornerRadius="20"
+               Padding="20"
+               BackgroundColor="White"
+               HasShadow="True">
 
+            <VerticalStackLayout Spacing="15">
+
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                    <Button Text="Perfil"
+                            BackgroundColor="Green"
+                            TextColor="White"
+                            Clicked="OnPerfilClicked"/>
+
+                    <Button Text="Partido"
+                            BackgroundColor="Green"
+                            TextColor="White"
+                            Clicked="OnPartidoClicked"/>
+                    <Button Text="Noticias"
+                            BackgroundColor="Purple"
+                            TextColor="White"
+                            Clicked="OnNoticiasClicked"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                    <Button Text="Ranking"
+                            BackgroundColor="Purple"
+                            TextColor="White"
+                            Clicked="OnRankingClicked"/>
+
+                    <Button Text="Logout"
+                            BackgroundColor="#B71C1C"
+                            TextColor="White"
+                            Clicked="OnLogoutClicked"/>
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </Frame>
+
+        <!-- Texto -->
         <Label Text="Selecciona un usuario para chatear:"
-               FontSize="18"/>
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="Purple"/>
 
         <!-- Lista de usuarios -->
         <CollectionView x:Name="UsuariosList"
-                SelectionChanged="OnUsuarioSeleccionado"
-                SelectionMode="Single">
+                        SelectionChanged="OnUsuarioSeleccionado"
+                        SelectionMode="Single">
+
             <CollectionView.ItemTemplate>
+
                 <DataTemplate>
-                    <Frame Padding="10" Margin="5" CornerRadius="8" HasShadow="True">
+
+                    <Frame Padding="15"
+                           Margin="6"
+                           CornerRadius="15"
+                           HasShadow="True"
+                           BackgroundColor="White">
+
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnUsuarioTapped" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Tapped="OnUsuarioTapped"
+                                                  NumberOfTapsRequired="1"/>
                         </Frame.GestureRecognizers>
-                        <Label Text="{Binding Nombre}" FontSize="16"/>
+
+                        <HorizontalStackLayout Spacing="10">
+
+                            <!-- Icono usuario -->
+                            <Label Text="👤"
+                                   FontSize="20"/>
+
+                            <!-- Nombre -->
+                            <Label Text="{Binding Nombre}"
+                                   FontSize="18"
+                                   VerticalOptions="Center"/>
+
+                        </HorizontalStackLayout>
+
                     </Frame>
+
                 </DataTemplate>
+
             </CollectionView.ItemTemplate>
+
         </CollectionView>
 
     </VerticalStackLayout>
+
 </ContentPage>

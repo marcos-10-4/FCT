@@ -1,17 +1,39 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.RegistrarPartido"
-             Title="Registrar Partido">
-    
-    <VerticalStackLayout Padding="30" Spacing="15">
+             BackgroundColor="White">
 
-        <Label Text="Registrar Partido" FontSize="24"/>
+    <VerticalStackLayout Padding="30" Spacing="20">
 
-        <Picker x:Name="Jugador1Picker" Title="Jugador 1"/>
-        <Picker x:Name="Jugador2Picker" Title="Jugador 2"/>
-        <Picker x:Name="GanadorPicker" Title="Ganador"/>
+        <Label Text="Registrar Partido"
+               FontSize="30"
+               TextColor="Purple"
+               HorizontalOptions="Center"/>
 
-        <Button Text="Guardar Partido" Clicked="OnGuardarClicked"/>
+        <Frame CornerRadius="20"
+               Padding="25"
+               BackgroundColor="White"
+               HasShadow="True">
+
+            <VerticalStackLayout Spacing="15">
+
+                <Picker x:Name="Jugador1Picker"
+                        Title="Jugador 1"/>
+
+                <Picker x:Name="Jugador2Picker"
+                        Title="Jugador 2"/>
+
+                <Picker x:Name="GanadorPicker"
+                        Title="Ganador"/>
+
+                <Button Text="Guardar Partido"
+                        BackgroundColor="Green"
+                        TextColor="White"
+                        Clicked="OnGuardarClicked"/>
+
+            </VerticalStackLayout>
+
+        </Frame>
 
     </VerticalStackLayout>
 

@@ -1,35 +1,57 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.Chat"
-             Title="Chat">
+             BackgroundColor="White">
 
-    <VerticalStackLayout Padding="10" Spacing="5">
+    <VerticalStackLayout Padding="10" Spacing="10">
 
-        <!-- CollectionView para mostrar mensajes -->
         <CollectionView x:Name="MensajesList"
                         ItemsSource="{Binding Mensajes}"
                         VerticalOptions="FillAndExpand">
+
             <CollectionView.ItemTemplate>
+
                 <DataTemplate>
-                    <Frame Padding="10" Margin="5"
-                           CornerRadius="10"
-                           HorizontalOptions="{Binding EsMio, Converter={StaticResource EscribirBool}}"
-                           BackgroundColor="{Binding EsMio, Converter={StaticResource EscribirBoolColor}}">
+
+                    <Frame Padding="10"
+                           Margin="5"
+                           CornerRadius="15"
+                           HasShadow="True"
+                           BackgroundColor="{Binding EsMio, Converter={StaticResource EscribirBoolColor}}"
+                           HorizontalOptions="{Binding EsMio, Converter={StaticResource EscribirBool}}">
+
                         <VerticalStackLayout>
-                            <Label Text="{Binding Texto}" LineBreakMode="WordWrap"/>
-                            <Label Text="{Binding Hora}" FontSize="10" HorizontalOptions="End"/>
+
+                            <Label Text="{Binding Texto}"
+                                   LineBreakMode="WordWrap"/>
+
+                            <Label Text="{Binding Hora}"
+                                   FontSize="10"
+                                   HorizontalOptions="End"/>
+
                         </VerticalStackLayout>
+
                     </Frame>
+
                 </DataTemplate>
+
             </CollectionView.ItemTemplate>
+
         </CollectionView>
 
-        <!-- Entrada de texto y botón enviar -->
-        <HorizontalStackLayout Spacing="5">
-            <Entry x:Name="MensajeEntry" Placeholder="Escribe un mensaje..." HorizontalOptions="FillAndExpand"/>
-            <Button Text="Enviar" Clicked="OnEnviarClicked"/>
+        <HorizontalStackLayout Spacing="10">
+
+            <Entry x:Name="MensajeEntry"
+                   Placeholder="Escribe un mensaje..."
+                   HorizontalOptions="FillAndExpand"/>
+
+            <Button Text="Enviar"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Clicked="OnEnviarClicked"/>
+
         </HorizontalStackLayout>
 
     </VerticalStackLayout>
+
 </ContentPage>

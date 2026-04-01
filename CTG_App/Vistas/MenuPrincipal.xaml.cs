@@ -81,7 +81,10 @@ public partial class MenuPrincipal : ContentPage
         // Deseleccionar cualquier item para permitir futuros taps
         UsuariosList.SelectedItem = null;
     }
-
+    private async void OnNoticiasClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Noticias());
+    }
     private async void OnLogoutClicked(object sender, EventArgs e)
     {
         await Navigation.PopToRootAsync();
