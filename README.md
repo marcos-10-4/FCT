@@ -17,3 +17,5 @@
 - Pruebo a conectar la aplicacion con la api y ya me funciona
 ## 26/03/2026
 - Hago el resto de las pantallas con sus funcionalidades
+## 28/03/2026
+- Actualización del menú y chat
