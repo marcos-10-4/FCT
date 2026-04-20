@@ -13,6 +13,7 @@ namespace CTG_Api.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Partido> Partidos { get; set; }
         public DbSet<Mensaje> Mensajes { get; set; }
+        public DbSet<Noticia> Noticias { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Partido>()

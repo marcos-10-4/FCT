@@ -14,14 +14,16 @@
                Padding="25"
                BackgroundColor="White"
                HasShadow="True">
-
-            <VerticalStackLayout Spacing="15">
+            <ScrollView>
+                <VerticalStackLayout Padding="20" Spacing="15">
 
                 <Picker x:Name="Jugador1Picker"
-                        Title="Jugador 1"/>
+                        Title="Jugador 1"
+                        SelectedIndexChanged="OnJugadoresSeleccionados"/>
 
                 <Picker x:Name="Jugador2Picker"
-                        Title="Jugador 2"/>
+                        Title="Jugador 2"
+                        SelectedIndexChanged="OnJugadoresSeleccionados"/>
 
                 <Picker x:Name="GanadorPicker"
                         Title="Ganador"/>
@@ -31,8 +33,8 @@
                         TextColor="White"
                         Clicked="OnGuardarClicked"/>
 
-            </VerticalStackLayout>
-
+                </VerticalStackLayout>
+            </ScrollView>
         </Frame>
 
     </VerticalStackLayout>

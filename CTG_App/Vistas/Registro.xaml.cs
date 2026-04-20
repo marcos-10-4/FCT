@@ -17,7 +17,7 @@ public partial class Registro : ContentPage
             nombre = NombreEntry.Text,
             email = EmailEntry.Text,
             passwordHash = PasswordEntry.Text,
-            rol = "Socio",
+            rol = RolPicker.SelectedItem?.ToString() ?? "Usuario",
             puntos = 0,
             partidosJugados = 0,
             victorias = 0,
@@ -39,7 +39,11 @@ public partial class Registro : ContentPage
         }
         else
         {
-            await DisplayAlert("Error", "No se pudo registrar", "OK");
+            var error = await response.Content.ReadAsStringAsync();
+            await DisplayAlert("Error", error, "OK");
         }
+        NombreEntry.Text = "";
+        EmailEntry.Text = "";
+        PasswordEntry.Text = "";
     }
 }

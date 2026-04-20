@@ -32,7 +32,14 @@
             <Button
                 Text="Registrarse"
                 Clicked="OnRegisterClicked"/>
-
+            
+            <Picker x:Name="RolPicker" Title="Selecciona tu rol">
+                <Picker.Items>
+                    <x:String>Usuario</x:String>
+                    <x:String>Entrenador</x:String>
+                    <x:String>Socio</x:String>
+                </Picker.Items>
+            </Picker>
         </VerticalStackLayout>
 
     </ScrollView>

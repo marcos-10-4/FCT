@@ -16,6 +16,11 @@ public partial class MenuPrincipal : ContentPage
     {
         InitializeComponent();
         usuarioLogueado = usuario; // Guardamos el usuario que hizo login
+
+        if (usuarioLogueado.Rol != "Entrenador")
+        {
+            BtnRegistrarPartido.IsVisible = false;
+        }
         CargarUsuarios();
     }
 
@@ -61,7 +66,7 @@ public partial class MenuPrincipal : ContentPage
 
     private async void OnPartidoClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new RegistrarPartido());
+        await Navigation.PushAsync(new RegistrarPartido(usuarioLogueado));
     }
 
     private async void OnRankingClicked(object sender, EventArgs e)
@@ -83,10 +88,36 @@ public partial class MenuPrincipal : ContentPage
     }
     private async void OnNoticiasClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Noticias());
+        await Navigation.PushAsync(new Noticias(usuarioLogueado));
     }
     private async void OnLogoutClicked(object sender, EventArgs e)
     {
         await Navigation.PopToRootAsync();
+    }
+    private async void OnEliminarUsuarioClicked(object sender, EventArgs e)
+    {
+        var boton = sender as Button;
+        var usuario = boton?.BindingContext as Usuario;
+        if (usuarioLogueado.Rol?.ToLower() != "admin")
+        {
+            boton.IsVisible = false;
+        }
+        if (usuario == null) return;
+
+        bool confirmar = await DisplayAlert("Confirmar", "¿Eliminar usuario?", "Sí", "No");
+
+        if (!confirmar) return;
+
+        var response = await client.DeleteAsync($"api/UsuariosControlador/{usuario.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            await DisplayAlert("OK", "Usuario eliminado", "OK");
+            CargarUsuarios(); // refrescar lista
+        }
+        else
+        {
+            await DisplayAlert("Error", "No tienes permisos o fallo en API", "OK");
+        }
     }
 }

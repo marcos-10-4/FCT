@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.Noticias"
+             x:Name="NoticiasPage"
              Title="Noticias"
              BackgroundColor="White"
              Padding="15">
@@ -16,7 +17,14 @@
                    TextColor="Purple"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"/>
-
+            
+            <Button x:Name="BtnPublicarNoticia"
+                    Text="Publicar noticia"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Clicked="OnPublicarNoticiaClicked"
+                    IsVisible="False"/>
+            
             <!-- NOTICIA DESTACADA -->
             <Frame CornerRadius="20"
                    HasShadow="True"
@@ -63,6 +71,10 @@
                                HasShadow="True"
                                BackgroundColor="White">
 
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNoticiaTapped"/>
+                            </Frame.GestureRecognizers>
+
                             <HorizontalStackLayout Spacing="10">
 
                                 <Image Source="{Binding Imagen}"
@@ -87,6 +99,12 @@
                                            LineBreakMode="WordWrap"
                                            MaxLines="4"/>
 
+                                    <Button Text="Eliminar"
+                                            BackgroundColor="Red"
+                                            TextColor="White"
+                                            Clicked="OnEliminarNoticia"
+                                            IsVisible="{Binding Source={x:Reference NoticiasPage}, Path=EsAdmin}" />
+                                    
                                 </VerticalStackLayout>
 
                             </HorizontalStackLayout>

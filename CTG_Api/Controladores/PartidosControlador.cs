@@ -1,6 +1,7 @@
 ﻿using CTG_Api.Data;
 using CTG_Api.DTOs;
 using CTG_Api.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -16,6 +17,7 @@ namespace CTG_Api.Controladores
         {
             _context = context;
         }
+        [Authorize(Roles = "Entrenador")]
         [HttpPost]
         public IActionResult RegistrarPartido(RegistrarPartido dto)
         {

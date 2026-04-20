@@ -1,6 +1,9 @@
 ﻿using CTG_Api.Data;
 using CTG_Api.DTOs;
 using CTG_Api.Modelos;
+using CTG_Api.Servicios;
+using CTG_Api.Utilidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -11,10 +14,11 @@ namespace CTG_Api.Controladores
     public class UsuariosControlador : ControllerBase
     {
         private readonly AppDb _context;
-
-        public UsuariosControlador(AppDb context)
+        private readonly JwtServicios _jwtService;
+        public UsuariosControlador(AppDb context,JwtServicios jwtServicio)
         {
             _context = context;
+            _jwtService = jwtServicio;
         }
 
         // GET: api/usuarios
@@ -27,19 +31,36 @@ namespace CTG_Api.Controladores
         public IActionResult Login(InicioSesion login)
         {
             var usuario = _context.Usuarios
-                .FirstOrDefault(u => u.Email == login.Email && u.PasswordHash == login.Password);
+                .FirstOrDefault(u => u.Email == login.Email);
 
             if (usuario == null)
-            {
-                return Unauthorized("Email o contraseña incorrectos");
-            }
+                return Unauthorized("Usuario no encontrado");
 
-            return Ok(usuario);
+            if (!SeguridadContraseña.VerificarPassword(login.Password, usuario.PasswordHash))
+                return Unauthorized("Contraseña incorrecta");
+
+            var token = _jwtService.GenerarToken(usuario);
+
+            return Ok(new
+            {
+                token,
+                usuario
+            });
         }
         // POST: api/usuarios/registro
         [HttpPost("registro")]
         public ActionResult<Usuario> Registrar(Usuario usuario)
         {
+            if (string.IsNullOrWhiteSpace(usuario.PasswordHash) || usuario.PasswordHash.Length < 6)
+            {
+                return BadRequest("La contraseña debe tener al menos 6 caracteres");
+            }
+            if (string.IsNullOrEmpty(usuario.Rol))
+            {
+                usuario.Rol = "Usuario";
+            }
+            usuario.PasswordHash = SeguridadContraseña.HashPassword(usuario.PasswordHash);
+
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
 
@@ -82,6 +103,20 @@ namespace CTG_Api.Controladores
                 return NotFound("Jugador no encontrado");
 
             return Ok(jugador);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public IActionResult EliminarUsuario(int id)
+        {
+            var usuario = _context.Usuarios.Find(id);
+
+            if (usuario == null)
+                return NotFound("Usuario no encontrado");
+
+            _context.Usuarios.Remove(usuario);
+            _context.SaveChanges();
+
+            return Ok("Usuario eliminado correctamente");
         }
     }
 }

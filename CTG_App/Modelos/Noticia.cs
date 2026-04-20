@@ -8,9 +8,10 @@ namespace CTG_App.Modelos
 {
     public class Noticia
     {
+        public int Id { get; set; }
         public string Titulo { get; set; }
         public string Contenido { get; set; }
-        public string Fecha { get; set; }
+        public DateTime Fecha { get; set; }
         public string Imagen { get; set; }
         public bool Destacada { get; set; }
     }

@@ -2,50 +2,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.Ranking"
              BackgroundColor="White">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
 
-    <VerticalStackLayout Padding="20" Spacing="20">
-
-        <Label Text="Ranking de Jugadores"
+            <Label Text="Ranking de Jugadores"
                FontSize="30"
                TextColor="Purple"
                HorizontalOptions="Center"/>
 
-        <CollectionView x:Name="RankingList">
+            <CollectionView x:Name="RankingList">
 
-            <CollectionView.ItemTemplate>
+                <CollectionView.ItemTemplate>
 
-                <DataTemplate>
+                    <DataTemplate>
 
-                    <Frame CornerRadius="15"
+                        <Frame CornerRadius="15"
                            Padding="15"
                            Margin="5"
                            HasShadow="True"
                            BackgroundColor="White">
 
-                        <Grid ColumnDefinitions="50,*,Auto">
+                            <Grid ColumnDefinitions="50,*,Auto">
 
-                            <Label Text="{Binding Posicion}"
+                                <Label Text="{Binding Posicion}"
                                    FontSize="20"
                                    TextColor="Purple"/>
 
-                            <Label Grid.Column="1"
+                                <Label Grid.Column="1"
                                    Text="{Binding Nombre}"
                                    FontAttributes="Bold"/>
 
-                            <Label Grid.Column="2"
-                                   Text="{Binding Victorias}"
+                                <Label Grid.Column="2"
+                                   Text="{Binding Puntos}"
                                    TextColor="Green"/>
 
-                        </Grid>
+                            </Grid>
 
-                    </Frame>
+                        </Frame>
 
-                </DataTemplate>
+                    </DataTemplate>
 
-            </CollectionView.ItemTemplate>
+                </CollectionView.ItemTemplate>
 
-        </CollectionView>
+            </CollectionView>
 
-    </VerticalStackLayout>
-
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

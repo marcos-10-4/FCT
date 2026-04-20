@@ -19,6 +19,14 @@ namespace CTG_App.Servicios
                 BaseAddress = new Uri("http://10.0.2.2:5085/") 
             };
         }
+        public async Task<List<Usuario>> GetUsuariosAsync()
+        {
+            return await _client.GetFromJsonAsync<List<Usuario>>("api/UsuariosControlador");
+        }
+        public async Task<List<Partido>> GetPartidosAsync()
+        {
+            return await _client.GetFromJsonAsync<List<Partido>>("api/PartidosControlador");
+        }
         public async Task<List<Ranking>> GetRankingAsync()
         {
             return await _client.GetFromJsonAsync<List<Ranking>>("api/UsuariosControlador/ranking");

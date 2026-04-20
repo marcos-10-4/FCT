@@ -2,21 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CTG_App.Vistas.MenuPrincipal"
+             x:Name="Page"
              Title="Menú Principal"
              BackgroundColor="White"
              Padding="20">
 
-    <VerticalStackLayout Spacing="20">
+    <Grid RowDefinitions="Auto,Auto,Auto,*"
+          RowSpacing="20">
 
         <!-- Título -->
-        <Label Text="Bienvenido"
+        <Label Grid.Row="0"
+               Text="Bienvenido"
                FontSize="30"
                TextColor="Purple"
                HorizontalOptions="Center"
                FontAttributes="Bold"/>
 
-        <!-- Tarjeta de botones -->
-        <Frame CornerRadius="20"
+        <!-- Tarjeta botones -->
+        <Frame Grid.Row="1"
+               CornerRadius="20"
                Padding="20"
                BackgroundColor="White"
                HasShadow="True">
@@ -31,13 +35,16 @@
                             Clicked="OnPerfilClicked"/>
 
                     <Button Text="Partido"
+                            x:Name="BtnRegistrarPartido"
                             BackgroundColor="Green"
                             TextColor="White"
                             Clicked="OnPartidoClicked"/>
+
                     <Button Text="Noticias"
                             BackgroundColor="Purple"
                             TextColor="White"
                             Clicked="OnNoticiasClicked"/>
+
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
@@ -47,7 +54,7 @@
                             TextColor="White"
                             Clicked="OnRankingClicked"/>
 
-                    <Button Text="Logout"
+                    <Button Text="Cerrar sesión"
                             BackgroundColor="#B71C1C"
                             TextColor="White"
                             Clicked="OnLogoutClicked"/>
@@ -59,18 +66,19 @@
         </Frame>
 
         <!-- Texto -->
-        <Label Text="Selecciona un usuario para chatear:"
+        <Label Grid.Row="2"
+               Text="Selecciona un usuario para chatear:"
                FontSize="18"
                FontAttributes="Bold"
                TextColor="Purple"/>
 
         <!-- Lista de usuarios -->
-        <CollectionView x:Name="UsuariosList"
+        <CollectionView Grid.Row="3"
+                        x:Name="UsuariosList"
                         SelectionChanged="OnUsuarioSeleccionado"
                         SelectionMode="Single">
 
             <CollectionView.ItemTemplate>
-
                 <DataTemplate>
 
                     <Frame Padding="15"
@@ -79,32 +87,33 @@
                            HasShadow="True"
                            BackgroundColor="White">
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnUsuarioTapped"
-                                                  NumberOfTapsRequired="1"/>
-                        </Frame.GestureRecognizers>
-
                         <HorizontalStackLayout Spacing="10">
 
-                            <!-- Icono usuario -->
+                            <!-- Icono -->
                             <Label Text="👤"
                                    FontSize="20"/>
 
                             <!-- Nombre -->
                             <Label Text="{Binding Nombre}"
                                    FontSize="18"
-                                   VerticalOptions="Center"/>
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="StartAndExpand"/>
+
+                            <!-- Botón eliminar -->
+                            <Button Text="Eliminar"
+                                    BackgroundColor="Red"
+                                    TextColor="White"
+                                    Clicked="OnEliminarUsuarioClicked"/>
 
                         </HorizontalStackLayout>
 
                     </Frame>
 
                 </DataTemplate>
-
             </CollectionView.ItemTemplate>
 
         </CollectionView>
 
-    </VerticalStackLayout>
+    </Grid>
 
 </ContentPage>

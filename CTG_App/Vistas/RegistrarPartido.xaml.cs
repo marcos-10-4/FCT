@@ -8,14 +8,25 @@ public partial class RegistrarPartido : ContentPage
     {
         BaseAddress = new Uri("http://10.0.2.2:5085/")
     };
-
+    private Usuario usuarioActual;
     List<Usuario> usuarios;
-
-    public RegistrarPartido()
+    public RegistrarPartido(Usuario usuario)
     {
         InitializeComponent();
+
+        usuarioActual = usuario;
+
+        if (usuarioActual.Rol != "Entrenador")
+        {
+            DisplayAlert("Acceso denegado",
+                "Solo los entrenadores pueden registrar partidos",
+                "OK");
+
+            Navigation.PopAsync();
+        }
         CargarUsuarios();
     }
+    
 
     private async void CargarUsuarios()
     {
@@ -43,7 +54,12 @@ public partial class RegistrarPartido : ContentPage
         var jugador1 = (Usuario)Jugador1Picker.SelectedItem;
         var jugador2 = (Usuario)Jugador2Picker.SelectedItem;
         var ganador = (Usuario)GanadorPicker.SelectedItem;
-
+        
+        if(jugador1 == null || jugador2 == null || ganador == null)
+        {
+            await DisplayAlert("Error", "Selecciona los jugadores y el ganador", "OK");
+            return;
+        }
         var partido = new
         {
             jugador1Id = jugador1.Id,
@@ -62,5 +78,28 @@ public partial class RegistrarPartido : ContentPage
         {
             await DisplayAlert("Error", "No se pudo guardar", "OK");
         }
+    }
+    private void OnJugadoresSeleccionados(object sender, EventArgs e)
+    {
+        if (Jugador1Picker.SelectedItem == null || Jugador2Picker.SelectedItem == null)
+            return;
+
+        var jugador1 = Jugador1Picker.SelectedItem as Usuario;
+        var jugador2 = Jugador2Picker.SelectedItem as Usuario;
+
+        if (jugador1.Id == jugador2.Id)
+        {
+            DisplayAlert("Error", "No puedes seleccionar el mismo jugador", "OK");
+            Jugador2Picker.SelectedItem = null;
+            return;
+        }
+
+        GanadorPicker.ItemsSource = new List<Usuario>
+        {
+        jugador1,
+        jugador2
+        };
+
+        GanadorPicker.ItemDisplayBinding = new Binding("Nombre");
     }
 }
