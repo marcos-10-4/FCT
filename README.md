@@ -19,3 +19,6 @@
 - Hago el resto de las pantallas con sus funcionalidades
 ## 28/03/2026
 - Actualización del menú y chat
+## 01/04/2026
+- Añadí pantalla de noticias
+- Actualización de la interfaz, colores del club.
