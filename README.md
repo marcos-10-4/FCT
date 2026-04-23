@@ -25,3 +25,7 @@
 ## 20/04/2026
 - Seguridad en las contraseñas
 - Implementación casi hecha para que admin borre usuarios. Arreglar próximo día
+## 23/04/2026
+- Admin ya puede borrar usuarios
+- Los demas usuarios que no sean admin no tienen permisos
+- Mejora de la legibilidad del código
