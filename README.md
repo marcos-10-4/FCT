@@ -22,3 +22,6 @@
 ## 01/04/2026
 - Añadí pantalla de noticias
 - Actualización de la interfaz, colores del club.
+## 20/04/2026
+- Seguridad en las contraseñas
+- Implementación casi hecha para que admin borre usuarios. Arreglar próximo día
