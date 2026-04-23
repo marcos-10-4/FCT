@@ -56,7 +56,10 @@ public partial class Noticias : ContentPage
         {
             var lista = await client.GetFromJsonAsync<List<Noticia>>("api/NoticiasControlador");
 
-            if (lista == null) return;
+            if (lista == null)
+            {
+                return;
+            }
 
             NoticiaDestacada = lista.FirstOrDefault();
 
@@ -76,14 +79,18 @@ public partial class Noticias : ContentPage
         var noticia = button?.BindingContext as Noticia;
 
         if (noticia == null)
+        {
             return;
+        }
 
         bool confirmar = await DisplayAlert("Eliminar",
             "¿Seguro que quieres eliminar esta noticia?",
             "Sí", "No");
 
         if (!confirmar)
+        {
             return;
+        }
 
         var response = await client.DeleteAsync($"api/NoticiasControlador/{noticia.Id}");
 

@@ -99,11 +99,12 @@
                                    VerticalOptions="Center"
                                    HorizontalOptions="StartAndExpand"/>
 
-                            <!-- Botón eliminar -->
+                            <!-- Botón eliminar (visible solo para admin) -->
                             <Button Text="Eliminar"
                                     BackgroundColor="Red"
                                     TextColor="White"
-                                    Clicked="OnEliminarUsuarioClicked"/>
+                                    Clicked="OnEliminarUsuarioClicked"
+                                    IsVisible="{Binding Source={x:Reference Page}, Path=IsAdmin}"/>
 
                         </HorizontalStackLayout>
 

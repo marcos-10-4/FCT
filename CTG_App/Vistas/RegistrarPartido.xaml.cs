@@ -22,6 +22,7 @@ public partial class RegistrarPartido : ContentPage
                 "Solo los entrenadores pueden registrar partidos",
                 "OK");
 
+            // No se puede await en el constructor; despachar navegación sin await
             Navigation.PopAsync();
         }
         CargarUsuarios();
@@ -55,7 +56,7 @@ public partial class RegistrarPartido : ContentPage
         var jugador2 = (Usuario)Jugador2Picker.SelectedItem;
         var ganador = (Usuario)GanadorPicker.SelectedItem;
         
-        if(jugador1 == null || jugador2 == null || ganador == null)
+        if (jugador1 == null || jugador2 == null || ganador == null)
         {
             await DisplayAlert("Error", "Selecciona los jugadores y el ganador", "OK");
             return;
@@ -82,7 +83,9 @@ public partial class RegistrarPartido : ContentPage
     private void OnJugadoresSeleccionados(object sender, EventArgs e)
     {
         if (Jugador1Picker.SelectedItem == null || Jugador2Picker.SelectedItem == null)
+        {
             return;
+        }
 
         var jugador1 = Jugador1Picker.SelectedItem as Usuario;
         var jugador2 = Jugador2Picker.SelectedItem as Usuario;
@@ -96,8 +99,8 @@ public partial class RegistrarPartido : ContentPage
 
         GanadorPicker.ItemsSource = new List<Usuario>
         {
-        jugador1,
-        jugador2
+            jugador1,
+            jugador2
         };
 
         GanadorPicker.ItemDisplayBinding = new Binding("Nombre");

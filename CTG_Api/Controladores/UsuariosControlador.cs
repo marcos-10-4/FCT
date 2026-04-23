@@ -34,10 +34,14 @@ namespace CTG_Api.Controladores
                 .FirstOrDefault(u => u.Email == login.Email);
 
             if (usuario == null)
+            {
                 return Unauthorized("Usuario no encontrado");
+            }
 
             if (!SeguridadContraseña.VerificarPassword(login.Password, usuario.PasswordHash))
+            {
                 return Unauthorized("Contraseña incorrecta");
+            }
 
             var token = _jwtService.GenerarToken(usuario);
 
@@ -100,7 +104,9 @@ namespace CTG_Api.Controladores
                 .FirstOrDefault();
 
             if (jugador == null)
+            {
                 return NotFound("Jugador no encontrado");
+            }
 
             return Ok(jugador);
         }
@@ -111,9 +117,15 @@ namespace CTG_Api.Controladores
             var usuario = _context.Usuarios.Find(id);
 
             if (usuario == null)
+            {
                 return NotFound("Usuario no encontrado");
+            }
+            var partidos = _context.Partidos
+        .Where(p => p.Jugador1Id == id || p.Jugador2Id == id);
 
+            _context.Partidos.RemoveRange(partidos);
             _context.Usuarios.Remove(usuario);
+
             _context.SaveChanges();
 
             return Ok("Usuario eliminado correctamente");

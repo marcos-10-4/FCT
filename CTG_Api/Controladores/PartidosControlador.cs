@@ -25,7 +25,9 @@ namespace CTG_Api.Controladores
             var jugador2 = _context.Usuarios.Find(dto.Jugador2Id);
 
             if (jugador1 == null || jugador2 == null)
+            {
                 return NotFound("Jugador no encontrado");
+            }
 
             var partido = new Partido
             {

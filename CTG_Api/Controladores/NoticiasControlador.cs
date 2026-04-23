@@ -42,7 +42,9 @@ namespace CTG_Api.Controladores
             var noticia = _context.Noticias.Find(id);
 
             if (noticia == null)
+            {
                 return NotFound();
+            }
 
             _context.Noticias.Remove(noticia);
             _context.SaveChanges();

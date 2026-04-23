@@ -42,7 +42,10 @@ public partial class Chat : ContentPage
         {
             var lista = await client.GetFromJsonAsync<List<Mensaje>>($"api/ChatControlador/{UsuarioActualId}/{ReceptorId}");
 
-            if (lista == null) return;
+            if (lista == null)
+            {
+                return;
+            }
 
             Mensajes.Clear();
             foreach (var m in lista)
@@ -52,7 +55,9 @@ public partial class Chat : ContentPage
             }
 
             if (Mensajes.Any())
+            {
                 MensajesList.ScrollTo(Mensajes.Last(), position: ScrollToPosition.End, animate: false);
+            }
         }
         catch (Exception ex)
         {
@@ -64,7 +69,9 @@ public partial class Chat : ContentPage
     private async void OnEnviarClicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(MensajeEntry.Text))
+        {
             return;
+        }
 
         var mensaje = new Mensaje
         {

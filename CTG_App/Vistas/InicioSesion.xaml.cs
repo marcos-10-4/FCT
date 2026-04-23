@@ -32,6 +32,7 @@ public partial class InicioSesion : ContentPage
             if (datos != null)
             {
                 var token = datos.Token;
+                Sesion.Token = token;
                 // establecer token en el cliente actual (si se usa más tarde)
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", token);

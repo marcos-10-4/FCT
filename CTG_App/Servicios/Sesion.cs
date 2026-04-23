@@ -9,5 +9,6 @@ namespace CTG_App.Servicios
     public static class Sesion
     {
         public static int UsuarioId { get; set; }
+        public static string Token { get; set; }
     }
 }

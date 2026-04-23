@@ -26,7 +26,7 @@ namespace CTG_Api.Servicios
             new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
             new Claim(ClaimTypes.Name, usuario.Nombre),
             new Claim(ClaimTypes.Role, usuario.Rol ?? "Usuario")
-        };
+            };
 
             var descriptor = new SecurityTokenDescriptor
             {

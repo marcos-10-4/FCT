@@ -1,4 +1,5 @@
 using CTG_App.Modelos;
+using CTG_App.Servicios;
 using System.Net.Http.Json;
 
 namespace CTG_App.Vistas;
@@ -15,8 +16,9 @@ public partial class MenuPrincipal : ContentPage
     public MenuPrincipal(Usuario usuario)
     {
         InitializeComponent();
-        usuarioLogueado = usuario; // Guardamos el usuario que hizo login
-
+        usuarioLogueado = usuario; // Asignar antes de usar
+        client.DefaultRequestHeaders.Authorization =
+        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Sesion.Token);
         if (usuarioLogueado.Rol != "Entrenador")
         {
             BtnRegistrarPartido.IsVisible = false;
