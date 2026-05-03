@@ -29,3 +29,5 @@
 - Admin ya puede borrar usuarios
 - Los demas usuarios que no sean admin no tienen permisos
 - Mejora de la legibilidad del código
+## 03/05/2026
+- Proyecto terminado
