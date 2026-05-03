@@ -13,6 +13,8 @@ public partial class MenuPrincipal : ContentPage
 
     private Usuario usuarioLogueado;
 
+    // La visibilidad del botón Eliminar se controla por elemento (Usuario.MostrarEliminar)
+
     public MenuPrincipal(Usuario usuario)
     {
         InitializeComponent();
@@ -26,6 +28,40 @@ public partial class MenuPrincipal : ContentPage
         CargarUsuarios();
     }
 
+    // cache local de usuarios para búsquedas
+    private List<Usuario> _usuariosCache = new List<Usuario>();
+
+    private void ApplyFilter(string filtro)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(filtro))
+            {
+                UsuariosList.ItemsSource = _usuariosCache;
+                return;
+            }
+
+            var f = filtro.Trim().ToLower();
+            var filtrados = _usuariosCache.Where(u => (u.Nombre ?? string.Empty).ToLower().Contains(f)
+                                                   || (u.Email ?? string.Empty).ToLower().Contains(f)).ToList();
+            UsuariosList.ItemsSource = filtrados;
+        }
+        catch
+        {
+            // ignorar errores de filtrado
+        }
+    }
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        ApplyFilter(e.NewTextValue);
+    }
+
+    private void OnSearchButtonPressed(object sender, EventArgs e)
+    {
+        ApplyFilter(UsuariosSearchBar.Text);
+    }
+
     // Cargar todos los usuarios excepto el que inició sesión
     private async void CargarUsuarios()
     {
@@ -36,7 +72,16 @@ public partial class MenuPrincipal : ContentPage
             // Excluir al usuario actual
             usuarios.RemoveAll(u => u.Id == usuarioLogueado.Id);
 
-            UsuariosList.ItemsSource = usuarios;
+            // Marcar si se muestra el botón eliminar por elemento según el rol del usuario logueado
+            bool mostrarEliminarParaTodos = usuarioLogueado.Rol?.ToLower() == "admin";
+            foreach (var u in usuarios)
+            {
+                u.MostrarEliminar = mostrarEliminarParaTodos;
+            }
+
+            // cachear y mostrar
+            _usuariosCache = usuarios;
+            UsuariosList.ItemsSource = _usuariosCache;
         }
         catch (Exception ex)
         {
@@ -79,9 +124,17 @@ public partial class MenuPrincipal : ContentPage
     // Maneja el tap en el Frame de cada usuario
     private async void OnUsuarioTapped(object sender, EventArgs e)
     {
-        var frame = sender as Frame;
-        var usuarioSeleccionado = frame?.BindingContext as Usuario;
-        if (usuarioSeleccionado == null) return;
+        Usuario usuarioSeleccionado = null;
+
+        if (sender is BindableObject bo)
+        {
+            usuarioSeleccionado = bo.BindingContext as Usuario;
+        }
+
+        if (usuarioSeleccionado == null)
+        {
+            return;
+        }
 
         await Navigation.PushAsync(new Chat(usuarioLogueado.Id, usuarioSeleccionado.Id));
 

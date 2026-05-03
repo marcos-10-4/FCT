@@ -17,6 +17,8 @@ namespace CTG_App.Modelos
         public int PartidosJugados { get; set; }
         public int Victorias { get; set; }
         public int Derrotas { get; set; }
+        // Propiedad cliente para controlar visibilidad en la UI (no se envía a la API)
+        public bool MostrarEliminar { get; set; }
         public override string ToString()
         {
             return Nombre;

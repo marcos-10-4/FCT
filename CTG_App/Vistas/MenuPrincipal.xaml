@@ -65,12 +65,22 @@
 
         </Frame>
 
-        <!-- Texto -->
-        <Label Grid.Row="2"
-               Text="Selecciona un usuario para chatear:"
-               FontSize="18"
-               FontAttributes="Bold"
-               TextColor="Purple"/>
+        <!-- Barra de búsqueda + texto -->
+        <VerticalStackLayout Grid.Row="2" Spacing="6">
+            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                <Label Text="🔍" FontSize="18" VerticalOptions="Center"/>
+                <SearchBar x:Name="UsuariosSearchBar"
+                           Placeholder="Buscar usuarios..."
+                           TextChanged="OnSearchTextChanged"
+                           SearchButtonPressed="OnSearchButtonPressed"
+                           HorizontalOptions="FillAndExpand" />
+            </HorizontalStackLayout>
+
+            <Label Text="Selecciona un usuario para chatear:"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="Purple" />
+        </VerticalStackLayout>
 
         <!-- Lista de usuarios -->
         <CollectionView Grid.Row="3"
@@ -87,7 +97,14 @@
                            HasShadow="True"
                            BackgroundColor="White">
 
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUsuarioTapped" CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+
                         <HorizontalStackLayout Spacing="10">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnUsuarioTapped" CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                            </HorizontalStackLayout.GestureRecognizers>
 
                             <!-- Icono -->
                             <Label Text="👤"
@@ -104,7 +121,7 @@
                                     BackgroundColor="Red"
                                     TextColor="White"
                                     Clicked="OnEliminarUsuarioClicked"
-                                    IsVisible="{Binding Source={x:Reference Page}, Path=IsAdmin}"/>
+                                    IsVisible="{Binding MostrarEliminar}"/>
 
                         </HorizontalStackLayout>
 

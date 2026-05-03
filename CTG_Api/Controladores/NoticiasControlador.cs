@@ -35,7 +35,7 @@ namespace CTG_Api.Controladores
 
             return Ok();
         }
-
+        // Eliminar noticia
         [HttpDelete("{id}")]
         public IActionResult EliminarNoticia(int id)
         {

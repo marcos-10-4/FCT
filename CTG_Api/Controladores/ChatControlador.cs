@@ -34,6 +34,7 @@ namespace CTG_Api.Controladores
 
             return Ok();
         }
+        //Chat entre dos usuarios
         [HttpGet("{usuario1}/{usuario2}")]
         public ActionResult<IEnumerable<Mensaje>> GetChat(int usuario1, int usuario2)
         {
